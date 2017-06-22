@@ -290,3 +290,85 @@ module.exports = {
 }
 
 ```
+
+# chapter 4 如何使用loader
+
+
+## 使用
+> http://webpack.github.io/docs/using-loaders.html
+
+- 在require声明中使用
+```js
+require("url-loader?mimetype=image/png!./file.png");
+```
+
+- 配置config文件
+
+```js
+{
+    test: /\.png$/,
+    loader: "url-loader",
+    query: { mimetype: "image/png" }
+}
+```
+
+- CLI中
+
+```
+webpack --module-bind "png=url-loader?mimetype=image/png"
+```
+
+## 如何用ES6
+
+> using Babel http://babeljs.io/docs/setup/#installation
+
+```
+npm install --save-dev babel-loader babel-core
+```
+
+因为es6不断变化，所以用的配置文件不一样，通过制定presets
+
+> http://babeljs.io/docs/plugins/#transform-plugins
+
+
+选择 latest 
+
+```
+npm install --save-dev babel-preset-latest
+```
+
+在config中配置
+
+也可以另外建立个.babelrc文件
+
+```js
+{
+    "presets": ["latest"]
+}
+```
+也可以在package.json里面定义
+
+```
+{
+  "name": "webpack-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bable": {
+    "presets": ["latest"] // 增加的
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons"
+  },
+```
+
+> 打包的速度
+
+babel 非常耗时
+
+test: A condition that must be met
+exclude: A condition that must not be met  排除的
+include: An array of paths or files where the imported files will be transformed by the loader 包含的
+loader: A string of “!” separated loaders
+loaders: An array of loaders as string
