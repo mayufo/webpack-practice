@@ -70,3 +70,76 @@ npm install html-webpack-plugin --save-dev
 
 
 > http://webpack.github.io/docs/using-plugins.html
+
+可以遍历出里面的参数
+
+```eje
+<%= htmlWebpackPlugin.options.date %>
+<% for (var key in htmlWebpackPlugin.files) {%>
+<%= key %> : <%= JSON.stringify(htmlWebpackPlugin.files[key])%>
+<% } %>
+
+<% for (var key in htmlWebpackPlugin.options) {%>
+<%= key %> : <%= JSON.stringify(htmlWebpackPlugin.options[key])%>
+<% } %>
+```
+
+> 参考插件的api https://www.npmjs.com/package/html-webpack-plugin
+
+打出的内容
+```
+Thu Jun 22 2017 11:52:57 GMT+0800 (中国标准时间)
+
+publicPath : ""
+
+chunks : {"main":{"size":24,"entry":"js/main-6409dbec7a578634313c.js","hash":"6409dbec7a578634313c","css":[]},"a":{"size":46,"entry":"js/a-ac3cfa9c31ab31c7ee2e.js","hash":"ac3cfa9c31ab31c7ee2e","css":[]}}
+
+js : ["js/main-6409dbec7a578634313c.js","js/a-ac3cfa9c31ab31c7ee2e.js"]
+
+css : []
+
+manifest : 
+
+
+
+template : "D:\\study\\webpack-practice\\node_modules\\html-webpack-plugin\\lib\\loader.js!D:\\study\\webpack-practice\\index.html"
+
+filename : "index.html"
+
+hash : false
+
+inject : "head"
+
+compile : true
+
+favicon : false
+
+minify : false
+
+cache : true
+
+showErrors : true
+
+chunks : "all"
+
+excludeChunks : []
+
+title : "webpack is good"
+
+xhtml : false
+
+date : "2017-06-22T03:52:57.284Z"
+```
+> 一部分js放在头部，一部分放在body
+
+通过设置
+
+```html
+<script src="<%= htmlWebpackPlugin.files.chunks.a.entry %>"></script>
+```
+
+压缩html
+
+> https://www.npmjs.com/package/html-webpack-plugin 
+
+minify 里面设置 可以看html-minifier 来设置
