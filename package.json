@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mayufo/webpack-practice#readme",
   "devDependencies": {
     "css-loader": "^0.28.4",
+    "html-webpack-inline-source-plugin": "0.0.9",
     "html-webpack-plugin": "^2.28.0",
     "style-loader": "^0.18.2",
     "webpack": "1.13.2"

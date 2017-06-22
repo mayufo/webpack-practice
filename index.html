@@ -6,11 +6,20 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+    <script type="text/javascript">
+        <%=
+            compilation.assets[htmlWebpackPlugin.files.chunks.main.entry.substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
+    </script>
+
 </head>
+
 <body>
-<script src="<%= htmlWebpackPlugin.files.chunks.a.entry %>"></script>
-<script type="text/javascript" src="bundle.js"></script>
+    <% for (var k in htmlWebpackPlugin.files.chunks) { %>
+        <% if(k!== 'main') { %>
+            <script type="text/javascript" src="<%= htmlWebpackPlugin.files.chunks[k].entry%>"></script>
+        <% } %>
+    <% } %>
+
 <!--我是注释-->
 </body>
 </html>
