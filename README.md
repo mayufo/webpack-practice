@@ -294,6 +294,8 @@ module.exports = {
 # chapter 4 如何使用loader
 
 
+> http://webpack.github.io/docs/list-of-loaders.html#packaging
+
 ## 使用
 > http://webpack.github.io/docs/using-loaders.html
 
@@ -372,3 +374,221 @@ exclude: A condition that must not be met  排除的
 include: An array of paths or files where the imported files will be transformed by the loader 包含的
 loader: A string of “!” separated loaders
 loaders: An array of loaders as string
+
+
+## 绝对路径到相对路径
+
+引入path
+
+path.resolve 是解析路径
+
+```js
+loaders: [
+          {
+              test: /\.js$/,
+              loaders: ['babel'],
+              exclude: path.resolve(__dirname, 'node_modules'), 
+          }
+      ]
+```
+
+## css-loader
+
+```
+npm install css-loader style-loader --save-dev
+```
+
+```
+{
+              test: /\.css$/,
+              loaders: ['style-loader', 'css-loader']
+          }
+```
+### 给css加前缀
+
+```
+npm i  postcss-loader  --save-dev  // 给css做预处理
+npm install autoprefixer --save-dev // 给css加前缀
+```
+
+> autoprefixerApi https://github.com/postcss/autoprefixer
+> postcss plugins https://github.com/postcss/postcss
+
+另外添加postcss.config.js
+```
+module.exports = {
+
+    plugins: [
+        require('autoprefixer')({
+            broswers: ['last 5 versions']
+        })
+    ]
+};
+```
+
+### css中存在import的语法
+
+引入进来的也需要postcss-loader
+
+```
+loaders: ['style-loader', 'css-loader?importLoaders=1', 'postcss-loader'],
+```
+执行顺序从右向左
+
+在css-loader之后用1个loaders来处理import进来的资源
+
+
+## less-loader
+
+```
+npm install --save-dev less-loader less
+```
+
+```
+{
+     test:  /\.less$/,
+     loaders: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
+
+}
+```
+
+当less中有import的时候，如果css中已经有import的配置，less就不需要配置了
+
+## sass-loader
+
+```
+npm install sass-loader node-sass webpack --save-dev
+```
+
+```js
+{
+              test:  /\.less$/,
+              loaders: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
+
+          }
+```
+
+## 处理模板文件
+
+> webpack 参考文档 http://webpack.github.io/docs/list-of-loaders.html#templating
+> git项目的文档 https://github.com/webpack-contrib/html-loader
+
+```
+npm i html-loader --save-dev
+```
+
+```
+npm i ejs-load --save-dev
+```
+
+
+```
+ loaders: [
+          {
+              test: /\.js$/,
+              loaders: ['babel'],
+              exclude: path.resolve(__dirname, 'node_modules'),
+              // include: path.resolve(__dirname, 'src')
+          },
+          {
+              test: /\.css$/,
+              loaders: ['style-loader', 'css-loader?importLoaders=1', 'postcss-loader'],
+          },
+          {
+              test:  /\.less$/,
+              loaders: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
+
+          },
+          {
+              test:  /\.scss/,
+              loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+
+          },
+          {
+              test:  /\.html$/,
+              loaders: ['html-loader']
+
+          },
+          {
+              test: /\.ejs$/,
+              loaders: ['ejs-loader']
+          }
+      ]
+```
+
+## 处理图片文件
+
+```
+npm install file-loader --save-dev
+```
+
+> https://github.com/webpack-contrib/file-loader
+
+```js
+{
+  test: /\.(png|jpg|gif|svg)$/i,
+  loaders: ['file-loader']
+}
+```
+
+如果是在项目上引用相对路径的图片,写在模板index.html
+
+如果在组件中插入图片，路径用的相对地址，打包的时候地址没有替换
+
+地址可以写成
+
+```
+<img src="${require('../../assets/img.jpg')}" alt="">
+```
+
+
+如果希望修改图片生成的地址
+
+```
+{
+  test: /\.(png|jpg|gif|svg)$/i,
+  loaders: ['file-loader?name=asset/[name]-[hash:5].[ext]']
+}
+```
+
+```
+{
+  test: /\.(png|jpg|gif|svg)$/i,
+  loader: 'file-loader',
+  query: {
+      name: 'asset/[name]-[hash:5].[ext]'
+  }
+}
+```
+
+## url-loader
+
+处理文件图片大小大于制定的limit 扔给file-loader, 当小于这个lime,它可以转成一个64位编码
+```
+npm install url-loader --save-dev
+```
+
+```
+{
+  test: /\.(png|jpg|gif|svg)$/i,
+  loader: 'url-loader',
+  query: {
+      limit: 20000,
+      name: 'asset/[name]-[hash:5].[ext]'
+  }
+}
+```
+
+http 在如果来的图片会有缓存，如果图片重复性很高用加载
+
+base64 没有缓存，容易导致代码的冗余和增加代码的体积
+
+## image-loader 压缩图片
+
+```
+npm install image-webpack-loader --save-dev
+```
+
+> image-loader Api https://github.com/tcoopman/image-webpack-loader
+
+对每个格式的图片都有优化器，可以通过参数设置

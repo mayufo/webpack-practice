@@ -38,27 +38,6 @@ module.exports = {
           {
               test: /\.ejs$/,
               loaders: ['ejs-loader']
-          },
-          // {
-          //     test: /\.(png|jpg|gif|svg)$/i,
-          //     loader: 'file-loader',
-          //     query: {
-          //         name: 'asset/[name]-[hash:5].[ext]'
-          //     }
-          // },
-          // {
-          //     test: /\.(png|jpg|gif|svg)$/i,
-          //     loader: 'url-loader',
-          //     query: {
-          //         limit: 20000,
-          //         name: 'asset/[name]-[hash:5].[ext]'
-          //     }
-          // },
-          {
-              test: /\.(png|jpg|gif|svg)$/i,
-              loaders: [
-                  'url-loader?limit=10000&name=assets/[name]-[hash:5].[ext]',
-                  'image-webpack']
           }
       ]
     },
