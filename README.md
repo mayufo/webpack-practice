@@ -592,3 +592,8 @@ npm install image-webpack-loader --save-dev
 > image-loader Api https://github.com/tcoopman/image-webpack-loader
 
 对每个格式的图片都有优化器，可以通过参数设置
+
+
+> 遗留一个问题 在自己的mac上用不了 image-webpack-loader 但在公司电脑上运行无误，可能是环境问题导致，
+
+参考了 https://github.com/tcoopman/image-webpack-loader/issues/51 但是没有解决

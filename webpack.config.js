@@ -43,7 +43,7 @@ module.exports = {
           //     test: /\.(png|jpg|gif|svg)$/i,
           //     loader: 'file-loader',
           //     query: {
-          //         name: 'asset/[name]-[hash:5].[ext]'
+          //         name: 'assets/[name]-[hash:5].[ext]'
           //     }
           // },
           // {
@@ -51,16 +51,25 @@ module.exports = {
           //     loader: 'url-loader',
           //     query: {
           //         limit: 20000,
-          //         name: 'asset/[name]-[hash:5].[ext]'
+          //         name: 'assets/[name]-[hash:5].[ext]'
           //     }
           // },
           {
               test: /\.(png|jpg|gif|svg)$/i,
               loaders: [
-                  'url-loader?limit=10000&name=assets/[name]-[hash:5].[ext]',
-                  'image-webpack']
+                  // 'file-loader?name=assets/[name]-[hash:5].[ext]',
+                  'url-loader?limit=100&name=assets/[name]-[hash:5].[ext]',
+                  // 'image-webpack-loader'
+              ]
           }
       ]
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 8080,
+        // stats: 'errors-only',
+        // open: true // 启动后自动打开浏览器窗口
     },
 
     plugins: [
@@ -68,7 +77,8 @@ module.exports = {
             template: 'index.html',
             filename: 'index.html',
             inject: 'body',  // 也可以放在body标签里面
-        })
+            title: 'may'
+        }),
 
         // new HtmlWebpackInlineSourcePlugin()
     ]
