@@ -1,6 +1,7 @@
 var htmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
-// var HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+var webpackDevServer = require('webpack-dev-server');
+// var  OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
     entry: './src/app.js',
@@ -59,7 +60,7 @@ module.exports = {
               loaders: [
                   // 'file-loader?name=assets/[name]-[hash:5].[ext]',
                   'url-loader?limit=100&name=assets/[name]-[hash:5].[ext]',
-                  // 'image-webpack-loader'
+                  'image-webpack-loader'
               ]
           }
       ]
@@ -80,7 +81,8 @@ module.exports = {
             title: 'may'
         }),
 
-        // new HtmlWebpackInlineSourcePlugin()
+        new htmlWebpackPlugin(),
+        // new webpackDevServer()
     ]
 
 }

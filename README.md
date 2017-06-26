@@ -596,4 +596,8 @@ npm install image-webpack-loader --save-dev
 
 > 遗留一个问题 在自己的mac上用不了 image-webpack-loader 但在公司电脑上运行无误，可能是环境问题导致，
 
-参考了 https://github.com/tcoopman/image-webpack-loader/issues/51 但是没有解决
+运行 brew install libpng
+
+
+参考了 https://github.com/tcoopman/image-webpack-loader/issues/51  
+
